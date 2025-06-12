@@ -41,7 +41,7 @@ A Human Resource Management System built with **Laravel** and **Blade**, featuri
 ## 📦 Installation
 
 
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/laraib15/hrm-laravel.git
 cd your-repo-name
 composer install
 cp .env.example .env
