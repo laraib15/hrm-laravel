@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $employee = DB::table('employees')->where('email', 'ali@gmail.com')->first();
         $user = User::create([
             'name'        => $employee->firstName,
-            'email'       => 'admin2@admin.com',
+            'email'       => 'admin@example.com',
             'password'    => Hash::make('password'),
             'employee_id' => $employee->employee_id,
         ]);
