@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+
 <div class="content">
     @if(Session::get('message'))
     <div class="alert alert-success">
@@ -27,11 +28,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($permission as $permission)
+                          @foreach($grouped as $module => $permissions)
+                            @foreach ($permissions as $permission)
                               <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $permission->name }}</td>
-                                <td>{{ $permission->for }}</td>
+                                <td>{{ Str::of($permission->name)->replace('.', ' ')->title() }}</td>
+                                <td>{{ ucfirst($module) }}</td>
                                   <td><a href="{{ route('permission.edit',$permission->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
                                   <td>
                                     <form id="delete-form-{{ $permission->id }}" method="post" action="{{ route('permission.delete',$permission->id) }}" style="display: none">
@@ -50,6 +52,7 @@
                                   </td>
                                 </tr>
                               </tr>
+                            @endforeach
                             @endforeach
                             </tbody>
                         <tfoot>

@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Role;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,16 +18,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $role_id = DB::table('roles')->where('name', 'Admin')->value('id');
+        // Get or create Admin role
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $employee = DB::table('employees')->where('email', 'ali@gmail.com')->first();
-        DB::table('users')->insert([
-            [
-                'name' =>$employee->firstName,
-                'email'=>'admin@admin.com',
-                'password' => Hash::make('password'),
-                'role_id'=> $role_id,
-                'employee_id'=> $employee->employee_id,
-            ],
+        $user = User::create([
+            'name'        => $employee->firstName,
+            'email'       => 'admin2@admin.com',
+            'password'    => Hash::make('password'),
+            'employee_id' => $employee->employee_id,
         ]);
+        // Assign role using Spatie
+        $user->assignRole($adminRole);
     }
 }

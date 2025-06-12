@@ -28,9 +28,9 @@
                     <label style="margin-bottom: 0.4cm;" for="name">Module Access</label>
 
                     <div class="row">
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
                             <label for="name">Employee:</label>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-9">
                             <div class="checkbox">
                                 @foreach ($permissions as $permission)
@@ -48,9 +48,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
                             <label for="name">Department : </label>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-9">
                             <div class="checkbox">
                               @foreach ($permissions as $permission)
@@ -69,9 +69,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
                             <label for="name">Attedndance :</label>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-9">
                             <div class="checkbox">
                               @foreach ($permissions as $permission)
@@ -90,9 +90,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
                             <label for="name">Leaves :</label>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-9">
                             <div class="checkbox">
                               @foreach ($permissions as $permission)
@@ -111,9 +111,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
                             <label for="name">PayRole :</label>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-9">
                             <div class="checkbox">
                               @foreach ($permissions as $permission)

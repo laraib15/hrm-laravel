@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Permission;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
@@ -9,9 +9,12 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $permission=Permission::all();
-
-        return view('dashboard.admin.permission.view',compact('permission'));
+        $permissions=Permission::all();
+$grouped = $permissions->groupBy(function ($permission) {
+        return explode('.', $permission->name)[0]; // department, employee
+    });
+    
+        return view('dashboard.admin.permission.view',compact('grouped'));
     }
     public function create()
     {
@@ -19,21 +22,28 @@ class PermissionController extends Controller
         $url=url('/permission/store');
         $title="Permission";
         $permission=new Permission;
-        $data=compact('url','title','permission');
+        $data=compact('url','title','permission');       
         return view('dashboard.admin.permission.create')->with( $data);
     }
     public function store(request $request){
-//dd($request->all());
-    $this->validate($request,[
-        'name' => ['required',Rule::unique('permissions')->where(function ($query) {
-            return $query->where('for', request()->for);
-        }),
-    ],
+
+       
+   $validated= $this->validate($request,[
+
+        'action' =>'required',
         'for'  => 'required'
         ]);
+         // Combine module and action into permission name
+    $name = strtolower($validated['for'] . '.' . $validated['action']);
+
+    // Check uniqueness manually
+    if (Permission::where('name', $name)->exists()) {
+        
+        return back()->withErrors(['Permission already exists.'])->withInput();
+    }
+   
     $permission = new Permission;
-    $permission->name = $request->name;
-    $permission->for = $request->for;
+    $permission->name = $name;   
     $permission->save();
 
     return redirect(route('permission.view'))->with('status','Permission Added successfully');
@@ -47,6 +57,7 @@ class PermissionController extends Controller
         $title="Update permission Detail";
         $url=url('/permission/update').'/'.$id;
         $data=compact('permission','url','title');
+        
         return view('dashboard.admin.permission.create')->with($data);
     }
 
@@ -59,13 +70,22 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name' => 'required|max:50',
-            'for'  => 'required'
-            ]);
+        $validated= $this->validate($request,[
+
+        'action' =>'required',
+        'for'  => 'required'
+        ]);
+         // Combine module and action into permission name
+    $name = strtolower($validated['for'] . '.' . $validated['action']);
+
+    // Check uniqueness manually
+    if (Permission::where('name', $name)->exists()) {
+        
+        return back()->withErrors(['Permission already exists.'])->withInput();
+    }
         $permission = Permission::find($id);
-        $permission->name = $request->name;
-        $permission->for = $request->for;
+        $permission->name = $name;
+        
         $permission->save();
 
         return redirect(route('permission.view'))->with('status','Permission updated successfully');

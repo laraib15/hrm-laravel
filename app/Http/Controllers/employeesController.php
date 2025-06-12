@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use App\Models\department;
-use App\Models\designation;
-use App\Models\Role;
-use App\Models\employee;
-use App\Models\user;
+use App\Models\Department;
+use App\Models\Designation;
+use Spatie\Permission\Models\Role;
+use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class employeesController extends Controller
+class EmployeesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,10 +22,10 @@ class employeesController extends Controller
 
     public function view(request $request)
     {
-        $employee = employee::paginate(10);
-        $department = department::all();
-        $designation = designation::all();
-        $user = user::all();
+        $employee = Employee::paginate(10);
+        $department = Department::all();
+        $designation = Designation::all();
+        $user = User::all();
         $data = compact('employee', 'department', 'designation', 'user');
         return view('dashboard.admin.employee.view')->with($data);
     }
@@ -39,13 +39,13 @@ class employeesController extends Controller
     {
         $url = url('/employee/store');
         $title = " Employee Registration";
-        $employee = new employee;
-        $user = new user;
+        $employee = new Employee;
+        $user = new User;
         $department = Department::all();
         $designation = Designation::all();
         $roles=Role::all();
         $data = compact('url', 'title', 'employee', 'department', 'designation', 'user','roles');
-        return view('dashboard.admin.employee.add')->with($data);
+       return view('dashboard.admin.employee.add', $data);
         // $department=department::all();
         // $data=compact('department');
         // return view('employee.add')->with($data);
@@ -82,7 +82,7 @@ class employeesController extends Controller
         try {
            
             //Create a new employee record
-            $employee = new employee;
+            $employee = new Employee;
             $employee->firstName = $request['firstName'];
             $employee->lastName = $request['lastName'];
             $employee->email = $request['email'];
@@ -96,7 +96,7 @@ class employeesController extends Controller
             $employee->is_active = $request['is_active'];
             $employee->save();
             //Create a new login record
-            $user = new user;
+            $user = new User;
             $user->employee_id = $employee->employee_id;
             $user->name = $request['firstName'];
             $user->email = $request['email_login'];
@@ -125,7 +125,7 @@ class employeesController extends Controller
      */
     public function edit($id)
     {
-        $employee = employee::find($id);
+        $employee = Employee::find($id);
 
         $users = DB::table('users')
             ->where('employee_id', $id)
@@ -144,7 +144,7 @@ class employeesController extends Controller
        //$user = User::all();
       $id = $users->id ;
       // $role = role::find($roleId);
-      $user =user::find($id);
+      $user =User::find($id);
      //dd($users->roles());
 
      //   $roles = $users->roles;
@@ -219,7 +219,7 @@ class employeesController extends Controller
                     'email' => $request->email_login,
                     'role_id' => $request->role,
                 ]);
-                user::find($id)->roles()->sync($request->role);
+                User::find($id)->roles()->sync($request->role);
             DB::commit();
         } catch (\Exception $e) {
             //Rollback the transaction
@@ -237,7 +237,7 @@ class employeesController extends Controller
      */
     public function delete($id)
     {
-        $employee = employee::find($id)->delete();
+        $employee = Employee::find($id)->delete();
         return redirect()->back()->with('status', 'Employee Details Deleted Successfully');
     }
 

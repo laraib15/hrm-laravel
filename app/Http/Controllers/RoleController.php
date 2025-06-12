@@ -101,7 +101,7 @@ class RoleController extends Controller
         $this->validate($request,[
             'name' =>'required|max:50'
             ]);
-        $role = role::find($id);
+        $role = Role::find($id);
         $role->name = $request->name;
         $role->save();
         $role->permissions()->sync($request->permission);
@@ -117,7 +117,7 @@ class RoleController extends Controller
     public function delete($id)
     {
 
-       role::where('id',$id)->delete();
+       Role::where('id',$id)->delete();
         return redirect()->back()->with('message','Role Deleted Successfully');
     }
 }

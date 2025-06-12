@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
-use App\Models\employee;
+use App\Models\Employee;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 

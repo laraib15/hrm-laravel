@@ -56,29 +56,32 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request){
-       
-      
-       $this->validate($request,[
-           'email'=>'required|email',
-           'password'=>'required'
-       ]);
-       $credentials = $request->only('email', 'password');
-       
+    public function login(Request $request)
+{
+    // Validate input
+    $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required'
+    ]);
 
-      if (auth()->attempt($credentials)) {
-       $user = auth()->user();
+    $credentials = $request->only('email', 'password');
 
-     
-        if(Auth()->user()->role->name=='admin'){
+    if (auth()->attempt($credentials)) {
+        $user = auth()->user();
+
+        // If you're using Spatie Laravel Permission
+        if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
-     }
-       elseif( Auth()->user()->role->name== 'staff' ){
-           return redirect()->route('user.dashboard');
-       }
+        } elseif ($user->hasRole('staff')) {
+            return redirect()->route('user.dashboard');
+        }
 
-       }else{
-           return redirect()->route('login')->with('error','Email and password are wrong');
-       }
+        // fallback if role is not recognized
+        auth()->logout();
+        return redirect()->route('login')->with('error', 'Unauthorized role access');
     }
+
+    return redirect()->route('login')->with('error', 'Email or password is incorrect');
+}
+
 }

@@ -62,14 +62,17 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role_id'=>2,
-        ]);
+   protected function create(array $data)
+{
+    $user = User::create([
+        'name'      => $data['name'],
+        'email'     => $data['email'],
+        'password'  => Hash::make($data['password']),
+    ]);
 
-    }
+    // Assign role using Spatie
+    $user->assignRole('staff');
+
+    return $user;
+}
 }
