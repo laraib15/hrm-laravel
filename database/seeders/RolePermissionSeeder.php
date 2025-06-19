@@ -29,10 +29,10 @@ class RolePermissionSeeder extends Seeder
         }
     }
 
-    $admin = Role::firstOrCreate(['name' => 'admin']);
+    $admin = Role::firstOrCreate(['name' => 'Admin']);
     $admin->syncPermissions(Permission::all());
 
-    $staff = Role::firstOrCreate(['name' => 'staff']);
+    $staff = Role::firstOrCreate(['name' => 'Staff']);
     $staff->syncPermissions([
         'department.view',
         'employee.view',

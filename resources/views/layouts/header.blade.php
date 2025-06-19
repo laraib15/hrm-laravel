@@ -24,7 +24,7 @@
     </div>
     <a href="{{ route('user.dashboard') }}"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
 
-
+   @if(auth()->user()->hasRole('Admin'))
     <button class="dropdown-btn"><a href="#"><i class="fas fa-user-tie"></i><span>Employee</span>
         <i class="fa fa-caret-down"></i></a>
       </button>
@@ -33,6 +33,7 @@
         <a href="{{ route('employee.view') }}"><span>List Employee</span></a>
 
       </div>
+
       <button class="dropdown-btn"><a  href="#"><i class="fas fa-building"></i><span> Departments</span>
         <i class="fa fa-caret-down"></i></a>
       </button>
@@ -41,6 +42,7 @@
         <a href="{{ route('department.view') }}">Departments</a>
     <a href="{{ route('department.add') }}">Add Department</a>
       </div>
+        @endif
 
       @if( auth()->user()->role_id == 1 )
       <button class="dropdown-btn"><a href="#"><i class="far fa-calendar-check"></i><span>Attendance</span>
@@ -65,7 +67,7 @@
         <a href="{{ route('leave.view') }}"><span>Leave</span></a>
 
       </div>
-
+        @if(auth()->user()->hasRole('Admin'))
       <button class="dropdown-btn"><a href="#"><i class="fas fa-user-lock"></i><span>Roles</span>
         <i class="fa fa-caret-down"></i></a>
       </button>
@@ -74,6 +76,8 @@
         <a href="{{ route('role.view') }}"><span>View</span></a>
 
       </div>
+        @endif
+      @if(auth()->user()->hasRole('Admin'))
       <button class="dropdown-btn"><a href="#"><i class="fas fa-lock"></i><span>Permission</span>
         <i class="fa fa-caret-down"></i></a>
       </button>
@@ -82,7 +86,7 @@
         <a href="{{ route('permission.view') }}"><span>View</span></a>
 
       </div>
-
+@endif
 
 <a href="#"><i class="far fa-money-bill-alt"></i><span>payroll</span></a>
 </div>

@@ -59,7 +59,7 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
- 
+
         $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
@@ -76,11 +76,11 @@ class EmployeesController extends Controller
             'password' => 'required',
             'role' => 'required',
         ]);
-       
+
         //Start database transa  DB::beginTransaction();
         DB::beginTransaction();
         try {
-           
+
             //Create a new employee record
             $employee = new Employee;
             $employee->firstName = $request['firstName'];
@@ -101,14 +101,12 @@ class EmployeesController extends Controller
             $user->name = $request['firstName'];
             $user->email = $request['email_login'];
             $user->password = Hash::make($request['password']);
-            $user->role_id = $request['role'];
             $user->save();
             $user->roles()->sync($request->role);
             DB::commit();
         } catch (\Exception $e) {
             //Rollback the transaction
             DB::rollback();
-            dd($e->getMessage());
             return redirect()->back()->withErrors($e->getMessage());
         }
         //Redirect with success message

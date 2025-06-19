@@ -10,6 +10,8 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use Spatie\Permission\Middleware\RoleMiddleware;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,9 @@ Route::middleware(['middleware'=>'PreventBackHistory'])->group(function () {
 Auth::routes(['register' => false]);
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth','PreventBackHistory'])->group(function () {
+
+
+Route::middleware(['auth','role:Admin','PreventBackHistory'])->group(function () {
 Route::get('dashboard', [AdminController::class,'index'])->name('admin.dashboard');
 Route::get('Profile', [AdminController::class,'profile'])->name('admin.profile');
 Route::get('/department/add', [DepartmentController::class, 'create'])->name('department.add');
@@ -73,7 +77,7 @@ Route::post('/permission/store', [PermissionController::class, 'store'])->name('
 
 });
 
-Route::group(['prefix'=>'user','middleware'=>['isUser','auth','PreventBackHistory']],function () {
+Route::group(['prefix'=>'user','middleware'=>['auth','role:Staff','PreventBackHistory']],function () {
     Route::get('dashboard', [UserController::class,'index'])->name('user.dashboard');
     Route::get('Profile', [UserController::class,'profile'])->name('user.profile');
     Route::post('startWork', [AttendanceController::class, 'startWork'])->name('attendance.startWork');

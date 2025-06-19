@@ -8,6 +8,7 @@ class UserController extends Controller
 {
     //
     function index(){
+
         return view('dashboard.user.index');
     }
     function profile(){

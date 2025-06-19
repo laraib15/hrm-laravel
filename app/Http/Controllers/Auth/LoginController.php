@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    
+
      protected function redirectTo()
 
 {
@@ -70,9 +70,9 @@ class LoginController extends Controller
         $user = auth()->user();
 
         // If you're using Spatie Laravel Permission
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('Admin')) {
             return redirect()->route('admin.dashboard');
-        } elseif ($user->hasRole('staff')) {
+        } elseif ($user->hasRole('Staff')) {
             return redirect()->route('user.dashboard');
         }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Spatie\Permission\Models\Permission;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -75,17 +75,14 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role =Role::find($id);
+        $role = Role::with('permissions')->find($id);
         if(is_null($role))
         return redirect('/role/view');
         else
         $title="Update Role Detail";
         $url=url('/role/update').'/'.$id;
         $permissions = Permission::all();
-       // dd($role->Permissions());
         $data=compact('permissions','url','title','role');
-
-
         return view('dashboard.admin.role.create')->with($data);
     }
 
