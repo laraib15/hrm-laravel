@@ -33,7 +33,6 @@ A Human Resource Management System built with **Laravel** and **Blade**, featuri
 - Laravel (Blade Templating)
 - Spatie Laravel Permission Package
 - Bootstrap (UI)
-- jQuery
 - MySQL / MariaDB
 
 ---
