@@ -132,7 +132,6 @@ class AttendanceController extends Controller
 
     public function searchAttendance(Request $request)
     {
-        // dd($request->all());
         $month = $request->input('month');
         $year = $request->input('year');
         // $user_id = Auth::user()->employee_id;
@@ -151,7 +150,7 @@ class AttendanceController extends Controller
         $currentDate = $startDate;
         while ($currentDate <= $endDate) {
             $dateString = $currentDate->toDateString();
-            //dd($dateString);
+
             $status = "Absent";
 
             foreach ($attendance as $att) {
@@ -219,7 +218,7 @@ class AttendanceController extends Controller
         $data = [];
         if ($department != "all") {
             $employees = Employee::where('department_id', $department)->get();
-            //dd($employees);
+
 
             foreach ($employees as $employee) {
                 // echo $employee->employee_id;
@@ -337,7 +336,6 @@ class AttendanceController extends Controller
 
                 $employees = Employee::where('department_id', $department)->get();
 
-                //dd($employees);
 
                 foreach ($employees as $employee) {
                     $department = Department::where('department_id', $employee->department_id)->first();
@@ -351,7 +349,7 @@ class AttendanceController extends Controller
                         $currentDate = $startDate;
                         while ($currentDate <= $endDate) {
                             $dateString = $currentDate->toDateString();
-                            //dd($dateString);
+
                             $status = "Absent";
 
                             foreach ($attendance as $att) {
@@ -385,7 +383,7 @@ class AttendanceController extends Controller
                     $currentDate = $startDate;
                     while ($currentDate <= $endDate) {
                         $dateString = $currentDate->toDateString();
-                        //dd($dateString);
+
                         $status = "Absent";
 
                         foreach ($attendance as $att) {

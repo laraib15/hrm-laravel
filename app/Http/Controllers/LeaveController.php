@@ -45,7 +45,7 @@ public function store(Request $request)
             'start_date'  => $validated['start_date'],
             'end_date'    => $validated['end_date'],
             'reason'      => ucfirst($validated['reason'] ?? ''),
-            
+
         ]);
 
         return redirect('/leave/view')->with('status', 'Successfully applied for leave.');
@@ -70,7 +70,6 @@ $data=compact('leave');
     public function edit($id)
     {
         $leave =Leave::find($id);
-        //dd($leave);
         if(is_null($leave))
         return redirect('leave/view');
         else
@@ -81,7 +80,6 @@ $data=compact('leave');
     }
     public function update(Request $request, $id)
     {
-       //dd($request->all());
         $request->validate([
         'type' => 'required ',
         'start_date' => 'required ',

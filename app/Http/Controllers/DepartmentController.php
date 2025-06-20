@@ -49,10 +49,6 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-
-          //dd($request->all());
-            // $image = $request->file('logo_path');
-            // dd($image);
             $request->validate([
                 'name' => 'required ',
                 'email' => 'required ',
@@ -107,7 +103,6 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-       //dd($request->all());
         $request->validate([
         'name' => 'required ',
         'email' => 'required ',

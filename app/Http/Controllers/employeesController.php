@@ -128,7 +128,7 @@ class EmployeesController extends Controller
         $users = DB::table('users')
             ->where('employee_id', $id)
             ->first();
-        //dd($user->all());
+
         if (is_null($employee))
             return redirect('/department/view');
         else
@@ -136,19 +136,15 @@ class EmployeesController extends Controller
         $url = url('/employee/update') . '/' . $id;
         $department = Department::all();
         $designation = Designation::all();
-        //$users = User::find($user->id);
-      $roles=Role::all();
-       //// $userId = 3;
-       //$user = User::all();
-      $id = $users->id ;
-      // $role = role::find($roleId);
-      $user =User::find($id);
-     //dd($users->roles());
 
-     //   $roles = $users->roles;
+      $roles=Role::all();
+
+      $id = $users->id ;
+
+      $user =User::find($id);
 
         $data = compact('url', 'title', 'employee', 'department', 'user', 'designation','roles');
-        // $data=compact('employee','url','title');
+
         return view('dashboard.admin.employee.add')->with($data);
     }
 
